@@ -253,6 +253,7 @@ export default function Home() {
 
       {/* Day Tabs */}
       <div className="max-w-4xl mx-auto px-4 mt-8">
+        <h2 className="text-2xl font-bold text-white mb-4">📅 重點活動</h2>
         <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide">
           {(Object.keys(schedule) as DayKey[]).map((day) => (
             <button
