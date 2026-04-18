@@ -202,19 +202,73 @@ export default function Home() {
         <h2 className="text-2xl font-bold text-white mb-4">📱 推薦下載 App</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {[
-            { name: "高德地圖", icon: "🗺️", desc: "導航、交通、公眾交通" },
-            { name: "美團", icon: "🍔", desc: "美食外賣、餐廳預訂" },
-            { name: "滴滴出行", icon: "🚗", desc: "叫車服務" },
-            { name: "支付寶", icon: "💳", desc: "數字錢包、行動支付" },
-            { name: "微信", icon: "💬", desc: "通訊、支付" },
-            { name: "大眾點評", icon: "⭐", desc: "餐廳評論、優惠" },
-          ].map((app) => (
-            <div key={app.name} className="bg-white rounded-xl p-4 text-center">
-              <div className="text-3xl mb-2">{app.icon}</div>
-              <div className="font-medium text-gray-800">{app.name}</div>
-              <div className="text-xs text-gray-500 mt-1">{app.desc}</div>
-            </div>
-          ))}
+            { 
+              name: "高德地圖", 
+              icon: "🗺️", 
+              desc: "導航、交通、公眾交通",
+              ios: "https://apps.apple.com/cn/app/id461703208",
+              android: "https://www.amap.com/download",
+              universal: "https://www.amap.com/download"
+            },
+            { 
+              name: "美團", 
+              icon: "🍔", 
+              desc: "美食外賣、餐廳預訂",
+              ios: "https://apps.apple.com/cn/app/id426889299",
+              android: "https://android.meituan.com",
+              universal: "https://www.meituan.com/app"
+            },
+            { 
+              name: "滴滴出行", 
+              icon: "🚗", 
+              desc: "叫車服務",
+              ios: "https://apps.apple.com/cn/app/id555239144",
+              android: "https://www.didiglobal.com",
+              universal: "https://www.didiglobal.com"
+            },
+            { 
+              name: "支付寶", 
+              icon: "💳", 
+              desc: "數字錢包、行動支付",
+              ios: "https://apps.apple.com/cn/app/id333206289",
+              android: "https://global.alipay.com",
+              universal: "https://global.alipay.com"
+            },
+            { 
+              name: "微信", 
+              icon: "💬", 
+              desc: "通訊、支付",
+              ios: "https://apps.apple.com/cn/app/id414478124",
+              android: "https://www.wechat.com/en/download.html",
+              universal: "https://www.wechat.com/en/download.html"
+            },
+            { 
+              name: "大眾點評", 
+              icon: "⭐", 
+              desc: "餐廳評論、優惠",
+              ios: "https://apps.apple.com/cn/app/id453196028",
+              android: "https://www.dianping.com/download",
+              universal: "https://www.dianping.com/download"
+            },
+          ].map((app) => {
+            // Detect if iOS or Android for smart redirect
+            const isIOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const downloadUrl = isIOS ? (app.ios || app.universal) : (app.android || app.universal);
+            return (
+              <a
+                key={app.name}
+                href={downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-xl p-4 text-center hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer active:scale-95"
+              >
+                <div className="text-3xl mb-2">{app.icon}</div>
+                <div className="font-medium text-gray-800">{app.name}</div>
+                <div className="text-xs text-gray-500 mt-1">{app.desc}</div>
+                <div className="mt-2 text-xs text-blue-500 font-medium">下載 →</div>
+              </a>
+            );
+          })}
         </div>
       </div>
 
