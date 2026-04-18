@@ -14,13 +14,40 @@ interface RestaurantInfo {
   priceRange?: string;
   highlights?: string[];
   mapUrl?: string;
+  bookingUrl?: string;
+  website?: string;
+}
+
+interface HospitalInfo {
+  name: string;
+  name_en: string;
+  address: string;
+  phone?: string;
+  description: string;
+  highlights?: string[];
+  mapUrl?: string;
+  website?: string;
+}
+
+interface AttractionInfo {
+  name: string;
+  name_en: string;
+  description: string;
+  highlights?: string[];
+  address?: string;
+  ticketInfo?: string;
+  suggestedDuration?: string;
+  imageUrl?: string;
+  mapUrl?: string;
 }
 
 interface ScheduleItem {
   time: string;
   event: string;
-  type: "aspire" | "merck" | "meal" | "break" | "transport" | "social" | "info";
+  type: "aspire" | "merck" | "meal" | "break" | "transport" | "social" | "info" | "hospital" | "attraction";
   restaurant?: RestaurantInfo;
+  hospital?: HospitalInfo;
+  attraction?: AttractionInfo;
 }
 
 const restaurants: Record<string, RestaurantInfo> = {
@@ -33,7 +60,8 @@ const restaurants: Record<string, RestaurantInfo> = {
     hours: "10:30-22:00",
     priceRange: "¥¥",
     highlights: ["北京烤鴨", "老北京炸醬麵", "小吊梨湯", "驢打滾"],
-    mapUrl: "https://maps.google.com/?q=小吊梨湯+北京"
+    mapUrl: "https://maps.google.com/?q=小吊梨湯+北京",
+    website: "https://www.xiaodiaoli.com"
   },
   "houhai16": {
     name: "后海16号",
@@ -44,7 +72,60 @@ const restaurants: Record<string, RestaurantInfo> = {
     hours: "11:00-14:00, 17:00-22:00",
     priceRange: "¥¥¥",
     highlights: ["胡同私房菜", "老北京味道", "環境幽靜", "預約制"],
-    mapUrl: "https://maps.google.com/?q=后海16号+北京"
+    mapUrl: "https://maps.google.com/?q=后海16号+北京",
+    website: "https://www.houhai16.com"
+  }
+};
+
+const hospital: HospitalInfo = {
+  name: "北京大學人民醫院",
+  name_en: "Peking University People's Hospital",
+  address: "北京市西城區西直門南大街11號",
+  phone: "+86-10-88326666",
+  description: "北京大學人民醫院是中國著名的三級甲等醫院，擁有先進的輔助生殖技術中心。醫院在生殖醫學領域處於國際領先地位，特別是體外受精-胚胎移植技術。",
+  highlights: [
+    "三級甲等綜合醫院",
+    "輔助生殖技術中心",
+    "國際領先的生殖醫學技術",
+    "專業的醫療團隊"
+  ],
+  mapUrl: "https://maps.google.com/?q=北京大学人民医院",
+  website: "https://www.pkuph.cn"
+};
+
+const attractions: Record<string, AttractionInfo> = {
+  "tiantan": {
+    name: "天壇",
+    name_en: "Temple of Heaven",
+    description: "天壇是明清兩代皇帝祭天祈穀的神聖場所，佔地約273萬平方米，是中國現存最大的古代祭祀建築群。1998年被列入世界文化遺產名錄。",
+    highlights: ["祈年殿", "回音壁", "圜丘", "丹陛橋"],
+    address: "北京市東城區天壇東路甲1號",
+    ticketInfo: "門票：旺季15元，淡季10元，建議提前網上預訂",
+    suggestedDuration: "建議遊覽時間：2-3小時",
+    imageUrl: "https://images.unsplash.com/photo-1508804052814-cd3ba865a116?w=800",
+    mapUrl: "https://maps.google.com/?q=天壇+北京"
+  },
+  "hutong": {
+    name: "胡同",
+    name_en: "Beijing Hutongs",
+    description: "胡同是北京老城區的傳統小巷，見證了老北京的生活文化。胡同遊是深入了解北京傳統生活的最佳方式，可以騎三輪車穿梭於狹窄的巷弄之間。",
+    highlights: ["什剎海胡同", "南鑼鼓巷", "東四胡同", "三輪車遊覽"],
+    address: "北京市西城區什剎海地區",
+    ticketInfo: "三輪車遊胡同：約100-200元/小時，建議透過導遊預訂",
+    suggestedDuration: "建議遊覽時間：2-3小時",
+    imageUrl: "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800",
+    mapUrl: "https://maps.google.com/?q=什剎海胡同+北京"
+  },
+  "qianmen": {
+    name: "前門大街",
+    name_en: "Qianmen Street",
+    description: "前門大街是北京最著名的商業街之一，保留了民國時期的建築風貌。這裡匯聚了众多老字號店鋪，如全聚德烤鴨店、同仁堂藥店等。",
+    highlights: ["全聚德烤鴨", "同仁堂", "老北京布鞋", "兔兒爺泥塑"],
+    address: "北京市東城區前門大街",
+    ticketInfo: "免費參觀，店鋪消費自理，建議晚上前往更能感受氛圍",
+    suggestedDuration: "建議遊覽時間：1-2小時",
+    imageUrl: "https://images.unsplash.com/photo-1470004914212-05527e49370b?w=800",
+    mapUrl: "https://maps.google.com/?q=前門大街+北京"
   }
 };
 
@@ -62,7 +143,7 @@ const schedule: Record<DayKey, ScheduleItem[]> = {
   "8": [
     { time: "09:00-12:00", event: "自由活動 / 城市探索", type: "info" },
     { time: "12:00-13:30", event: "午餐時間", type: "meal" },
-    { time: "16:30-18:30", event: "醫院參觀：北京大學人民醫院", type: "info" },
+    { time: "16:30-18:30", event: "醫院參觀：北京大學人民醫院", type: "hospital", hospital: hospital },
     { time: "晚上", event: "MERCK Dinner", type: "merck" },
     { time: "晚上", event: "ASPIRE Opening & Awards Ceremony", type: "aspire" },
   ],
@@ -96,6 +177,8 @@ const typeColors: Record<ScheduleItem["type"], string> = {
   transport: "bg-sky-100 border-sky-300 text-sky-800",
   social: "bg-green-100 border-green-300 text-green-800",
   info: "bg-gray-100 border-gray-300 text-gray-700",
+  hospital: "bg-red-100 border-red-300 text-red-800",
+  attraction: "bg-orange-100 border-orange-300 text-orange-800",
 };
 
 const typeLabels: Record<ScheduleItem["type"], string> = {
@@ -106,11 +189,15 @@ const typeLabels: Record<ScheduleItem["type"], string> = {
   transport: "交通",
   social: "社交",
   info: "資訊",
+  hospital: "醫院參觀",
+  attraction: "景點",
 };
 
 export default function Home() {
   const [activeDay, setActiveDay] = useState<DayKey>("6");
   const [selectedRestaurant, setSelectedRestaurant] = useState<RestaurantInfo | null>(null);
+  const [selectedHospital, setSelectedHospital] = useState<HospitalInfo | null>(null);
+  const [selectedAttraction, setSelectedAttraction] = useState<AttractionInfo | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
@@ -194,14 +281,23 @@ export default function Home() {
               </div>
               <div className="flex-1">
                 <div className="font-medium">
-                  {item.restaurant ? (
+                  {item.restaurant && (
                     <button
                       onClick={() => setSelectedRestaurant(item.restaurant!)}
                       className="text-left hover:text-blue-600 underline underline-offset-2"
                     >
                       {item.event}
                     </button>
-                  ) : (
+                  )}
+                  {item.hospital && (
+                    <button
+                      onClick={() => setSelectedHospital(item.hospital!)}
+                      className="text-left hover:text-red-600 underline underline-offset-2"
+                    >
+                      {item.event}
+                    </button>
+                  )}
+                  {!item.restaurant && !item.hospital && (
                     item.event
                   )}
                 </div>
@@ -209,6 +305,7 @@ export default function Home() {
                   item.type === "aspire" ? "bg-blue-100 text-blue-700" :
                   item.type === "merck" ? "bg-purple-100 text-purple-700" :
                   item.type === "meal" ? "bg-amber-100 text-amber-700" :
+                  item.type === "hospital" ? "bg-red-100 text-red-700" :
                   "bg-gray-100 text-gray-600"
                 }`}>
                   {typeLabels[item.type]}
@@ -246,6 +343,27 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Beijing Attractions */}
+      <div className="max-w-4xl mx-auto px-4 mt-10">
+        <h2 className="text-2xl font-bold text-white mb-4">🏛️ 北京景點推薦</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {(Object.values(attractions) as AttractionInfo[]).map((attraction) => (
+            <button
+              key={attraction.name}
+              onClick={() => setSelectedAttraction(attraction)}
+              className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition text-left"
+            >
+              <div className="h-40 bg-cover bg-center" style={{ backgroundImage: `url(${attraction.imageUrl})` }} />
+              <div className="p-4">
+                <h3 className="font-bold text-gray-800">{attraction.name}</h3>
+                <p className="text-xs text-gray-500">{attraction.name_en}</p>
+                <p className="text-sm text-gray-600 mt-2 line-clamp-2">{attraction.description}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Recommended Apps */}
       <div className="max-w-4xl mx-auto px-4 mt-6">
         <h2 className="text-2xl font-bold text-white mb-4">📱 推薦下載 App</h2>
@@ -272,6 +390,39 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Contact Information */}
+      <div className="max-w-4xl mx-auto px-4 mt-6">
+        <h2 className="text-2xl font-bold text-white mb-4">📞 聯絡資訊</h2>
+        <div className="bg-white rounded-2xl p-6 shadow-xl">
+          <div className="space-y-4">
+            <div className="flex items-start gap-4">
+              <span className="text-2xl">🏨</span>
+              <div>
+                <h3 className="font-bold text-gray-800">中國國家會議中心酒店</h3>
+                <p className="text-sm text-gray-600">電話：+86-10-84372008</p>
+                <p className="text-sm text-gray-600">地址：Building 1, No. 8 Yard, Beichen West Road, Chaoyang District, Beijing</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="text-2xl">🏥</span>
+              <div>
+                <h3 className="font-bold text-gray-800">北京大學人民醫院</h3>
+                <p className="text-sm text-gray-600">電話：+86-10-88326666</p>
+                <p className="text-sm text-gray-600">地址：北京市西城區西直門南大街11號</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="text-2xl">🚗</span>
+              <div>
+                <h3 className="font-bold text-gray-800">大會交通安排</h3>
+                <p className="text-sm text-gray-600">大會將安排穿梭巴士來往酒店與會議場地</p>
+                <p className="text-sm text-gray-600">醫院參觀當日亦安排接送服務</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -382,16 +533,214 @@ export default function Home() {
                 )}
               </div>
               
-              {selectedRestaurant.mapUrl && (
-                <a
-                  href={selectedRestaurant.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition"
+              <div className="mt-5 flex flex-col gap-2">
+                {selectedRestaurant.mapUrl && (
+                  <a
+                    href={selectedRestaurant.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition"
+                  >
+                    📍 在地圖中查看
+                  </a>
+                )}
+                {selectedRestaurant.website && (
+                  <a
+                    href={selectedRestaurant.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition"
+                  >
+                    🌐 官方網站
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Hospital Detail Modal */}
+      {selectedHospital && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">{selectedHospital.name}</h3>
+                  <p className="text-sm text-gray-500">{selectedHospital.name_en}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedHospital(null)}
+                  className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
                 >
-                  📍 在地圖中查看
-                </a>
+                  ×
+                </button>
+              </div>
+              
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">📝</span>
+                  <div>
+                    <div className="font-medium text-gray-700">簡介</div>
+                    <div className="text-gray-600 leading-relaxed">{selectedHospital.description}</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">📍</span>
+                  <div>
+                    <div className="font-medium text-gray-700">地址</div>
+                    <div className="text-gray-600">{selectedHospital.address}</div>
+                  </div>
+                </div>
+                
+                {selectedHospital.phone && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">☎️</span>
+                    <div>
+                      <div className="font-medium text-gray-700">電話</div>
+                      <div className="text-gray-600">{selectedHospital.phone}</div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedHospital.highlights && selectedHospital.highlights.length > 0 && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">⭐</span>
+                    <div>
+                      <div className="font-medium text-gray-700">特色</div>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {selectedHospital.highlights.map((h, i) => (
+                          <span key={i} className="px-2 py-0.5 bg-red-100 text-red-700 rounded-full text-xs">
+                            {h}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="mt-5 flex flex-col gap-2">
+                {selectedHospital.mapUrl && (
+                  <a
+                    href={selectedHospital.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition"
+                  >
+                    📍 在地圖中查看
+                  </a>
+                )}
+                {selectedHospital.website && (
+                  <a
+                    href={selectedHospital.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition"
+                  >
+                    🌐 官方網站
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Attraction Detail Modal */}
+      {selectedAttraction && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">{selectedAttraction.name}</h3>
+                  <p className="text-sm text-gray-500">{selectedAttraction.name_en}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedAttraction(null)}
+                  className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                >
+                  ×
+                </button>
+              </div>
+              
+              {selectedAttraction.imageUrl && (
+                <div className="rounded-xl overflow-hidden mb-4">
+                  <img src={selectedAttraction.imageUrl} alt={selectedAttraction.name} className="w-full h-48 object-cover" />
+                </div>
               )}
+              
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">📝</span>
+                  <div>
+                    <div className="font-medium text-gray-700">簡介</div>
+                    <div className="text-gray-600 leading-relaxed">{selectedAttraction.description}</div>
+                  </div>
+                </div>
+                
+                {selectedAttraction.highlights && selectedAttraction.highlights.length > 0 && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">⭐</span>
+                    <div>
+                      <div className="font-medium text-gray-700">必看景點</div>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {selectedAttraction.highlights.map((h, i) => (
+                          <span key={i} className="px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full text-xs">
+                            {h}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedAttraction.address && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">📍</span>
+                    <div>
+                      <div className="font-medium text-gray-700">地址</div>
+                      <div className="text-gray-600">{selectedAttraction.address}</div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedAttraction.ticketInfo && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">🎫</span>
+                    <div>
+                      <div className="font-medium text-gray-700">門票資訊</div>
+                      <div className="text-gray-600">{selectedAttraction.ticketInfo}</div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedAttraction.suggestedDuration && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">⏱️</span>
+                    <div>
+                      <div className="font-medium text-gray-700">建議遊覽時間</div>
+                      <div className="text-gray-600">{selectedAttraction.suggestedDuration}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="mt-5 flex flex-col gap-2">
+                {selectedAttraction.mapUrl && (
+                  <a
+                    href={selectedAttraction.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition"
+                  >
+                    📍 在地圖中查看
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>
