@@ -202,28 +202,27 @@ export default function Home() {
         <h2 className="text-2xl font-bold text-white mb-4">📱 推薦下載 App</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {[
-            {[
-              { name: "高德地圖", icon: "🗺️", desc: "導航、交通、公眾交通", ios: "https://apps.apple.com/cn/app/id461703208", android: "https://www.amap.com/download" },
-              { name: "美團", icon: "🍔", desc: "美食外賣、餐廳預訂", ios: "https://apps.apple.com/cn/app/id426889299", android: "https://android.meituan.com" },
-              { name: "滴滴出行", icon: "🚗", desc: "叫車服務", ios: "https://apps.apple.com/cn/app/id555239144", android: "https://www.didiglobal.com" },
-              { name: "支付寶", icon: "💳", desc: "數字錢包、行動支付", ios: "https://apps.apple.com/cn/app/id333206289", android: "https://global.alipay.com" },
-              { name: "微信", icon: "💬", desc: "通訊、支付", ios: "https://apps.apple.com/cn/app/id414478124", android: "https://www.wechat.com/en/download.html" },
-              { name: "大眾點評", icon: "⭐", desc: "餐廳評論、優惠", ios: "https://apps.apple.com/cn/app/id453196028", android: "https://www.dianping.com/download" },
-            ].map((app) => (
-              <div key={app.name} className="bg-white rounded-xl p-4 text-center">
-                <div className="text-3xl mb-2">{app.icon}</div>
-                <div className="font-medium text-gray-800">{app.name}</div>
-                <div className="text-xs text-gray-500 mt-1">{app.desc}</div>
-                <div className="mt-3 flex justify-center gap-3">
-                  <a href={app.ios} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2 py-1 bg-black text-white rounded-lg text-xs hover:bg-gray-800 transition">
-                    <span></span> App Store
-                  </a>
-                  <a href={app.android} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2 py-1 bg-green-600 text-white rounded-lg text-xs hover:bg-green-700 transition">
-                    <span>▶</span> Google Play
-                  </a>
-                </div>
+            { name: "高德地圖", icon: "🗺️", desc: "導航、交通、公眾交通", ios: "https://apps.apple.com/cn/app/id461703208", android: "https://www.amap.com/download" },
+            { name: "美團", icon: "🍔", desc: "美食外賣、餐廳預訂", ios: "https://apps.apple.com/cn/app/id426889299", android: "https://android.meituan.com" },
+            { name: "滴滴出行", icon: "🚗", desc: "叫車服務", ios: "https://apps.apple.com/cn/app/id555239144", android: "https://www.didiglobal.com" },
+            { name: "支付寶", icon: "💳", desc: "數字錢包、行動支付", ios: "https://apps.apple.com/cn/app/id333206289", android: "https://global.alipay.com" },
+            { name: "微信", icon: "💬", desc: "通訊、支付", ios: "https://apps.apple.com/cn/app/id414478124", android: "https://www.wechat.com/en/download.html" },
+            { name: "大眾點評", icon: "⭐", desc: "餐廳評論、優惠", ios: "https://apps.apple.com/cn/app/id453196028", android: "https://www.dianping.com/download" },
+          ].map((app) => (
+            <div key={app.name} className="bg-white rounded-xl p-4 text-center">
+              <div className="text-3xl mb-2">{app.icon}</div>
+              <div className="font-medium text-gray-800">{app.name}</div>
+              <div className="text-xs text-gray-500 mt-1">{app.desc}</div>
+              <div className="mt-3 flex justify-center gap-3">
+                <a href={app.ios} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2 py-1 bg-black text-white rounded-lg text-xs hover:bg-gray-800 transition">
+                  <span></span> App Store
+                </a>
+                <a href={app.android} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2 py-1 bg-green-600 text-white rounded-lg text-xs hover:bg-green-700 transition">
+                  <span>▶</span> Google Play
+                </a>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
 
