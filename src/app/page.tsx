@@ -4,11 +4,49 @@ import { useState } from "react";
 
 type DayKey = "6" | "7" | "8" | "9" | "10";
 
+interface RestaurantInfo {
+  name: string;
+  name_en?: string;
+  cuisine: string;
+  address: string;
+  phone?: string;
+  hours?: string;
+  priceRange?: string;
+  highlights?: string[];
+  mapUrl?: string;
+}
+
 interface ScheduleItem {
   time: string;
   event: string;
   type: "aspire" | "merck" | "meal" | "break" | "transport" | "social" | "info";
+  restaurant?: RestaurantInfo;
 }
+
+const restaurants: Record<string, RestaurantInfo> = {
+  "xiao-diaoli": {
+    name: "小吊梨湯",
+    name_en: "Xiao Diao Li Tang",
+    cuisine: "北京菜 · 烤鴨",
+    address: "北京市朝陽區廣渠路36號院6號樓",
+    phone: "+86-10-87766877",
+    hours: "10:30-22:00",
+    priceRange: "¥¥",
+    highlights: ["北京烤鴨", "老北京炸醬麵", "小吊梨湯", "驢打滾"],
+    mapUrl: "https://maps.google.com/?q=小吊梨湯+北京"
+  },
+  "houhai16": {
+    name: "后海16号",
+    name_en: "Houhai No.16",
+    cuisine: "北京私房菜",
+    address: "北京市西城區后海北沿16號",
+    phone: "+86-10-64019916",
+    hours: "11:00-14:00, 17:00-22:00",
+    priceRange: "¥¥¥",
+    highlights: ["胡同私房菜", "老北京味道", "環境幽靜", "預約制"],
+    mapUrl: "https://maps.google.com/?q=后海16号+北京"
+  }
+};
 
 const schedule: Record<DayKey, ScheduleItem[]> = {
   "6": [
@@ -17,7 +55,7 @@ const schedule: Record<DayKey, ScheduleItem[]> = {
   ],
   "7": [
     { time: "07:00-17:00", event: "ASPIRE Program 全日會議", type: "aspire" },
-    { time: "12:00-13:30", event: "午餐：小吊梨汤 · 北京菜 · 烤鸭", type: "meal" },
+    { time: "12:00-13:30", event: "午餐：小吊梨汤 · 北京菜 · 烤鸭", type: "meal", restaurant: restaurants["xiao-diaoli"] },
     { time: "下午", event: "MTE Symposium · Speaker Q&A · Afternoon Tea Break", type: "aspire" },
     { time: "晚上", event: "MERCK Dinner (nearby hotel)", type: "merck" },
   ],
@@ -33,7 +71,7 @@ const schedule: Record<DayKey, ScheduleItem[]> = {
     { time: "上午", event: "MTE FFW Morning Tea Break", type: "break" },
     { time: "上午", event: "MTE LH-Chinese Speaker Session", type: "aspire" },
     { time: "12:00-13:30", event: "午餐時間 (with Dr Fatemi)", type: "meal" },
-    { time: "晚上", event: "晚餐：后海16号 · 北京私房菜", type: "meal" },
+    { time: "晚上", event: "晚餐：后海16号 · 北京私房菜", type: "meal", restaurant: restaurants["houhai16"] },
   ],
   "10": [
     { time: "07:30-11:40", event: "ASPIRE Program", type: "aspire" },
@@ -72,7 +110,7 @@ const typeLabels: Record<ScheduleItem["type"], string> = {
 
 export default function Home() {
   const [activeDay, setActiveDay] = useState<DayKey>("6");
-  const [showApps, setShowApps] = useState(false);
+  const [selectedRestaurant, setSelectedRestaurant] = useState<RestaurantInfo | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
@@ -155,7 +193,18 @@ export default function Home() {
                 {item.time}
               </div>
               <div className="flex-1">
-                <div className="font-medium">{item.event}</div>
+                <div className="font-medium">
+                  {item.restaurant ? (
+                    <button
+                      onClick={() => setSelectedRestaurant(item.restaurant!)}
+                      className="text-left hover:text-blue-600 underline underline-offset-2"
+                    >
+                      {item.event}
+                    </button>
+                  ) : (
+                    item.event
+                  )}
+                </div>
                 <div className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full ${
                   item.type === "aspire" ? "bg-blue-100 text-blue-700" :
                   item.type === "merck" ? "bg-purple-100 text-purple-700" :
@@ -248,6 +297,105 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Restaurant Detail Modal */}
+      {selectedRestaurant && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">{selectedRestaurant.name}</h3>
+                  {selectedRestaurant.name_en && (
+                    <p className="text-sm text-gray-500">{selectedRestaurant.name_en}</p>
+                  )}
+                </div>
+                <button
+                  onClick={() => setSelectedRestaurant(null)}
+                  className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">🍽️</span>
+                  <div>
+                    <div className="font-medium text-gray-700">菜系</div>
+                    <div className="text-gray-600">{selectedRestaurant.cuisine}</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">📍</span>
+                  <div>
+                    <div className="font-medium text-gray-700">地址</div>
+                    <div className="text-gray-600">{selectedRestaurant.address}</div>
+                  </div>
+                </div>
+                
+                {selectedRestaurant.phone && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">☎️</span>
+                    <div>
+                      <div className="font-medium text-gray-700">電話</div>
+                      <div className="text-gray-600">{selectedRestaurant.phone}</div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedRestaurant.hours && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">🕐</span>
+                    <div>
+                      <div className="font-medium text-gray-700">營業時間</div>
+                      <div className="text-gray-600">{selectedRestaurant.hours}</div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedRestaurant.priceRange && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">💰</span>
+                    <div>
+                      <div className="font-medium text-gray-700">人均</div>
+                      <div className="text-gray-600">{selectedRestaurant.priceRange}</div>
+                    </div>
+                  </div>
+                )}
+                
+                {selectedRestaurant.highlights && selectedRestaurant.highlights.length > 0 && (
+                  <div className="flex items-start gap-3">
+                    <span className="text-lg">⭐</span>
+                    <div>
+                      <div className="font-medium text-gray-700">推薦菜式</div>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {selectedRestaurant.highlights.map((h, i) => (
+                          <span key={i} className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full text-xs">
+                            {h}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {selectedRestaurant.mapUrl && (
+                <a
+                  href={selectedRestaurant.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition"
+                >
+                  📍 在地圖中查看
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <div className="text-center py-8 text-white/50 text-sm">
