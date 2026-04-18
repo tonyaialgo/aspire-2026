@@ -316,6 +316,32 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Venue Info */}
+      <div className="max-w-4xl mx-auto px-4 mt-10">
+        <h2 className="text-2xl font-bold text-white mb-4">🏛️ 會議場地資訊</h2>
+        <div className="bg-white rounded-2xl p-6 shadow-xl">
+          <h3 className="text-lg font-bold text-gray-800 mb-2">
+            中國國家會議中心
+          </h3>
+          <p className="text-gray-600 mb-3">
+            China National Convention Center (CNCC)
+          </p>
+          <div className="space-y-2 text-sm text-gray-600">
+            <p>📍 北京市朝陽區北辰西路8號院</p>
+            <p>🕐 大會報到：5月6日 08:00-17:00</p>
+            <p>🚇 交通：地鐵8號線「奧林匹克公園站」A出口</p>
+          </div>
+          <a
+            href="https://maps.google.com/?q=China+National+Convention+Center+Beijing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition"
+          >
+            📍 在地圖中查看
+          </a>
+        </div>
+      </div>
+
       {/* Hotel Info */}
       <div className="max-w-4xl mx-auto px-4 mt-10">
         <h2 className="text-2xl font-bold text-white mb-4">🏨 酒店資訊</h2>
