@@ -425,27 +425,38 @@ export default function Home() {
         <div className="bg-white rounded-2xl p-6 shadow-xl">
           <div className="space-y-4">
             <div className="flex items-start gap-4">
-              <span className="text-2xl">🏨</span>
+              <span className="text-2xl">👤</span>
               <div>
-                <h3 className="font-bold text-gray-800">中國國家會議中心酒店</h3>
-                <p className="text-sm text-gray-600">電話：+86-10-84372008</p>
-                <p className="text-sm text-gray-600">地址：Building 1, No. 8 Yard, Beichen West Road, Chaoyang District, Beijing</p>
+                <h3 className="font-bold text-gray-800">Stephen Lee</h3>
+                <p className="text-sm text-gray-500">Head of Core Franchise BU</p>
+                <p className="text-sm text-gray-600">Email: stephen.lee@merckgroup.com</p>
+                <p className="text-sm text-gray-600">Mobile: +852 9650 8756</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="text-2xl">🏥</span>
+              <span className="text-2xl">👤</span>
               <div>
-                <h3 className="font-bold text-gray-800">北京大學人民醫院</h3>
-                <p className="text-sm text-gray-600">電話：+86-10-88326666</p>
-                <p className="text-sm text-gray-600">地址：北京市西城區西直門南大街11號</p>
+                <h3 className="font-bold text-gray-800">Serena Wang</h3>
+                <p className="text-sm text-gray-500">Head of Medical Affair HK & Macau Medical Affair Department</p>
+                <p className="text-sm text-gray-600">Email: Serena.wang@merckgroup.com</p>
+                <p className="text-sm text-gray-600">Mobile: +852 6760 3956</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="text-2xl">🚗</span>
+              <span className="text-2xl">✈️</span>
               <div>
-                <h3 className="font-bold text-gray-800">大會交通安排</h3>
-                <p className="text-sm text-gray-600">大會將安排穿梭巴士來往酒店與會議場地</p>
-                <p className="text-sm text-gray-600">醫院參觀當日亦安排接送服務</p>
+                <h3 className="font-bold text-gray-800">Cathay Pacific</h3>
+                <p className="text-sm text-gray-600">+86 400 815 2888 (China)</p>
+                <p className="text-sm text-gray-600">+852 2747 3333 (HK)</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="text-2xl">🚨</span>
+              <div>
+                <h3 className="font-bold text-gray-800">緊急求助</h3>
+                <p className="text-sm text-gray-600">110 (警察)</p>
+                <p className="text-sm text-gray-600">120 (救護車)</p>
+                <p className="text-sm text-gray-600">119 (消防)</p>
               </div>
             </div>
           </div>
